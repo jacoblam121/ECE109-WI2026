@@ -14,6 +14,7 @@ from PyPDF2 import PdfMerger
 
 # Configuration
 WORKSPACE_DIR = Path(__file__).parent
+SOURCE_DIR = WORKSPACE_DIR / "Source"
 OUTPUT_DIR = WORKSPACE_DIR / "Quizzes"
 
 # Patterns to match semester folders
@@ -133,12 +134,19 @@ def main():
     print("ECE109 Quiz Sorter and Merger")
     print("=" * 60)
     print(f"\nWorkspace: {WORKSPACE_DIR}")
+    print(f"Source directory: {SOURCE_DIR}")
     print(f"Output directory: {OUTPUT_DIR}")
     print()
     
+    # Check if source directory exists
+    if not SOURCE_DIR.exists():
+        print(f"Error: Source directory not found: {SOURCE_DIR}")
+        print("Please ensure all semester folders are in the 'Source' folder.")
+        return
+    
     # Find all semester folders
     semester_folders = []
-    for item in WORKSPACE_DIR.iterdir():
+    for item in SOURCE_DIR.iterdir():
         if item.is_dir():
             parsed = parse_semester_folder(item.name)
             if parsed:
