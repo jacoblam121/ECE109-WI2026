@@ -1,0 +1,510 @@
+\documentclass[10pt, twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage[margin=0.6in, bottom=0.7in, top=0.7in]{geometry} % Margins
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{graphicx} % Added for image inclusion
+
+% Font size for the document body
+\AtBeginDocument{\footnotesize}
+
+% Line spacing
+\setstretch{0.85} % Reduced line spacing
+
+% List spacing (aggressive)
+\setlist{nosep, itemsep=0pt, parsep=0pt, partopsep=0pt, topsep=0.15\baselineskip}
+\setlist[itemize]{leftmargin=1.2em} % Reduced left margin for itemize
+\setlist[itemize,1]{leftmargin=1.2em} % first level
+\setlist[itemize,2]{leftmargin=1em} % second level, slightly less indent
+\setlist[itemize,3]{leftmargin=1em} % third level
+
+
+% Section title formatting
+\titleformat{\section}{\normalsize\bfseries}{\thesection}{0.7em}{}
+\titlespacing*{\section}{0pt}{0.8\baselineskip}{0.4\baselineskip}
+
+% Custom commands for Ev and Od to match original's curly style
+\newcommand{\Ev}{\mathcal{E}v}
+\newcommand{\Od}{\mathcal{O}d}
+\newcommand{\gcdop}{\text{gcd}} % for gcd operator
+
+\pagestyle{plain} % Page numbers
+\setcounter{page}{1} % Start page numbering at 1
+
+\begin{document}
+
+% --- Section 1: From Midterm Sheet ---
+\section{Useful Identities}
+\noindent\textbf{Complex numbers and trigonometry}
+\begin{itemize}
+    \item Complex $z = x+jy = |z|e^{j\angle z}$. $|z|=\sqrt{x^2+y^2}$, $\angle z = \text{atan2}(y,x)$.
+    \item Magnitude/Angle Properties: If $z = z_1 z_2 / z_3$, then $|z| = |z_1||z_2|/|z_3|$ and $\angle z = \angle z_1 + \angle z_2 - \angle z_3$.
+    \item Triangle Inequality: For complex numbers $z_1, z_2$:
+        \begin{itemize}
+            \item $|z_1 + z_2| \le |z_1| + |z_2|$
+            \item $||z_1| - |z_2|| \le |z_1 - z_2|$ (Reverse Triangle Inequality)
+        \end{itemize}
+    \item Euler's formula: $e^{j\theta} = \cos \theta + j \sin \theta$
+    \item Common Phasor Identities: $e^{j0}=1$; $e^{j\pi/2}=j$; $e^{j\pi}=-1$; $e^{-j\pi/2}=-j$. Also: $e^{j\pi/4} = \frac{1+j}{\sqrt{2}}$; $e^{j\pi/6} = \frac{\sqrt{3}}{2}+j\frac{1}{2}$; $e^{j\pi/3} = \frac{1}{2}+j\frac{\sqrt{3}}{2}$.
+    $e^{j(\pi + 2k\pi)} = -1;$
+    $e^{j(2k\pi)} = 1$
+    \item Nth roots of a complex number: If $z^N = w = r_0 e^{j\theta_0}$, then $z_k = r_0^{1/N} e^{j(\theta_0 + 2\pi k)/N}$ for $k=0, 1, \dots, N-1$. (Roots are equally spaced on a circle).
+    \item Basic trigonometric identities: \\
+    $\cos \theta = \frac{1}{2}(e^{j\theta} + e^{-j\theta})$; $\sin\theta = \frac{1}{2j}(e^{j\theta} - e^{-j\theta})$ \\
+    $\text{sinc}(t) = \frac{\sin(\pi t)}{\pi t}$ \\
+    $\sin^2(\theta) + \cos^2(\theta) = 1$ \\
+    $\sin(\theta) = \cos(\theta - \pi/2)$ \\
+    $\cos(k\pi) = (-1)^k$ for integer $k$. \\
+    $e^{j(A+B)} = \cos(A+B) + j \sin(A+B)$ \\
+    $e^{jA}e^{jB} = (\cos(A) + j \sin(A))(\cos(B) + j \sin(B))$ \\
+    \hspace*{1em}$= (\cos(A)\cos(B) - \sin(A)\sin(B)) + j(\sin(A)\cos(B) + \cos(A)\sin(B))$ \\
+    $\cos(A+B) = \cos(A)\cos(B) - \sin(A)\sin(B)$ \\
+    $\sin(A+B) = \sin(A)\cos(B) + \cos(A)\sin(B)$ \\
+    $\cos(A-B) = \cos(A)\cos(B) + \sin(A)\sin(B)$ \\
+    $\sin(A-B) = \sin(A)\cos(B) - \cos(A)\sin(B)$ \\
+    $\sin(A)\cos(B) = \frac{1}{2}(\sin(A+B) + \sin(A-B))$ \\
+    $\cos(A)\sin(B) = \frac{1}{2}(\sin(A+B) - \sin(A-B))$ \\
+    $\cos(A)\cos(B) = \frac{1}{2}(\cos(A+B) + \cos(A-B))$ \\
+    $\sin(A)\sin(B) = \frac{1}{2}(\cos(A-B) - \cos(A+B))$ \\
+    $\angle\cos(\omega) = \begin{cases} \pi & \text{if } -\pi \le \omega < -\frac{\pi}{2} \\ 0 & \text{if } -\frac{\pi}{2} < \omega < \frac{\pi}{2} \\ \pi & \text{if } \frac{\pi}{2} < \omega \le \pi \end{cases}$ \\
+    $\angle\sin(\omega) = \begin{cases} 0 & \text{if } 0 < \omega < \pi \\ \pi & \text{if } -\pi < \omega < 0 \end{cases}$
+\end{itemize}
+\begin{itemize}
+    \item Infinite geometric series: $\sum_{n=0}^{\infty} z^n = \frac{1}{1-z}$, for $|z|<1$; $\sum_{n=0}^{\infty} nz^n = \frac{z}{(1-z)^2}$, for $|z|<1$.
+    \item Finite geometric series: \\
+    $\sum_{n=0}^{N-1} z^n = \frac{1-z^N}{1-z}$ for $z \neq 1$. (Sum is $N$ if $z=1$). \\
+    $\sum_{k=0}^{N} z^k = \frac{1-z^{N+1}}{1-z}$ for $z \neq 1$. (Sum is $N+1$ if $z=1$).
+    \item Useful identities involving complex exponentials: \\
+    $1+e^{-jM} = e^{-j\frac{M}{2}} (e^{j\frac{M}{2}} + e^{-j\frac{M}{2}}) = 2e^{-j\frac{M}{2}}\cos\left(\frac{M}{2}\right)$ \\
+    $1-e^{-jM} = e^{-j\frac{M}{2}} (e^{j\frac{M}{2}} - e^{-j\frac{M}{2}}) = 2je^{-j\frac{M}{2}}\sin\left(\frac{M}{2}\right)$
+\end{itemize}
+
+% Unit Circle Image - Moved to end of Section 1
+\begin{center}
+    % You can place your unit circle image file here.
+    \includegraphics[width=0.8\columnwidth]{Unit-circle.png}
+\end{center}
+\vspace{0.1\baselineskip} % Add a little space after the image before next section
+
+
+% --- Section 2: From Midterm Sheet ---
+\section{Signals - Chapter 1}
+\begin{itemize}
+    \item Signal energy and power \\
+    Total energy (CT): $E_{\infty} = \int_{-\infty}^{\infty} |x(t)|^2 dt$ \\
+    Total energy (DT): $E_{\infty} = \sum_{n=-\infty}^{\infty} |x[n]|^2$ \\
+    Average power (CT): $P_{\infty} = \lim_{T\to\infty} \frac{1}{2T} \int_{-T}^{T} |x(t)|^2 dt$ \\
+    Average power (DT): $P_{\infty} = \lim_{N\to\infty} \frac{1}{2N+1} \sum_{n=-N}^{N} |x[n]|^2$ \\
+    For periodic signals: \\
+    Average power in one period (CT): $\frac{1}{T} \int_{T} |x(t)|^2 dt$ \\
+    Average power in one period (DT): $\frac{1}{N} \sum_{n=\langle N \rangle} |x[n]|^2$
+    \item Transformations of independent variable
+    \begin{itemize}
+        \item Time shifting, time reversal, time scaling
+        \item Interpretations of $x(at-b) = x(a(t-b/a))$:
+        \begin{itemize}
+            \item Shift by $b$ then scale $t$ by $a$: $x(t-b) \to x(at-b)$.
+            \item Scale $t$ by $a$ then shift $t$ by $b/a$: $x(at) \to x(a(t-b/a))$.
+        \end{itemize}
+        \item Interpretations of $x[an-b]$, $a, b$ integers (similar logic)
+    \end{itemize}
+    \item Periodic signals
+    \begin{itemize}
+        \item Periodicity conditions:
+            \begin{itemize}
+                \item CT: $x(t)$ is periodic if $\exists T > 0$ s.t. $x(t+T) = x(t)$ for all $t$. Smallest such $T$ is the fundamental period $T_0$.
+                \item DT: $x[n]$ is periodic if $\exists N \in \mathbb{Z}, N > 0$ s.t. $x[n+N] = x[n]$ for all $n$. Smallest such $N$ is the fundamental period $N_0$.
+            \end{itemize}
+        \item Fundamental frequency $\omega_0 = 2\pi/T_0$ (CT), $\Omega_0 = 2\pi/N_0$ (DT).
+        \item Finding Fund. Period ($T_0$ or $N_0$):
+            \begin{itemize}
+                \item Single CT signal (e.g., $e^{j\omega_0 t}, \cos(\omega_0 t)$): $T_0 = 2\pi/|\omega_0|$.
+                \item Single DT signal $x[n]=e^{j\Omega_0 n}$: $\Omega_0$ must be a rational multiple of $2\pi$, i.e., $\Omega_0 = 2\pi \frac{m}{N}$ ($m,N \in \mathbb{Z}$, $N>0$, $m,N$ coprime). Fund. period $N_0 = N$. If $\Omega_0=0$ (DC signal), $N_0=1$.
+                \item Sum of CT signals $x(t) = \sum_i x_i(t)$ with fund. periods $T_i$: $T_0 = \text{LCM}(T_1, T_2, \dots)$ if all $T_i/T_j$ are rational. If $x(t) = \sum_i C_i e^{j\omega_i t}$ and all $\omega_i/\omega_j$ are rational, let $\omega_f = \gcdop(|\omega_1|, |\omega_2|, \dots)$, then $T_0=2\pi/\omega_f$. Otherwise, not periodic.
+                \item Sum of DT signals $x[n] = \sum_i x_i[n]$ with fund. periods $N_i$: $N_0 = \text{LCM}(N_1, N_2, \dots)$.
+            \end{itemize}
+        \item Periodicity and scaling
+    \end{itemize}
+    \item Even and Odd signals
+    \begin{itemize}
+        \item Definitions of even and odd signals:
+            \begin{itemize}
+                \item Even signal: $x(t) = x(-t)$ (CT), $x[n] = x[-n]$ (DT).
+                \item Odd signal: $x(t) = -x(-t)$ (CT), $x[n] = -x[-n]$ (DT).
+            \end{itemize}
+        \item Even-odd decomposition theorem: $x(t) = \Ev\{x(t)\} + \Od\{x(t)\}$ where $\Ev\{x(t)\} = \frac{x(t)+x(-t)}{2}$ and $\Od\{x(t)\} = \frac{x(t)-x(-t)}{2}$. (Similar for DT).
+    \end{itemize}
+    \item CT and DT impulse and unit step signals \\
+    Relationships \\
+    $\sum_{n=-\infty}^{\infty} \delta[n] = 1$ \\
+    $\delta[n] = u[n] - u[n-1]$ \\
+    $u[n] = \sum_{k=0}^{\infty} \delta[n-k] = \sum_{k=-\infty}^{n} \delta[k]$ \\
+    $\int_{-\infty}^{\infty} \delta(t)dt = 1$ \\
+    $\delta(t) = \frac{d}{dt}u(t)$ \\
+    $u(t) = \int_{-\infty}^{t} \delta(\tau)d\tau$ \\
+    \noindent\textbf{Sampling and Sifting Properties}
+        \begin{itemize}
+            \item Sampling Property:
+                \begin{itemize}
+                    \item $x[n]\delta[n-n_0] = x[n_0]\delta[n-n_0]$
+                    \item $x(t)\delta(t-t_0) = x(t_0)\delta(t-t_0)$
+                \end{itemize}
+            \item Sifting Property:
+                 \begin{itemize}
+                    \item $\sum_{n=-\infty}^{\infty} x[n]\delta[n-n_0] = x[n_0]$
+                    \item $\int_{-\infty}^{\infty} x(t)\delta(t-t_0)dt = x(t_0)$
+                \end{itemize}
+        \end{itemize}
+    \noindent\textbf{Representation property} \\
+    $x[n] = \sum_{k=-\infty}^{\infty} x[k]\delta[n-k]$ \\
+    $x(t) = \int_{-\infty}^{\infty} x(\tau)\delta(t-\tau)d\tau$
+    \item Complex exponential signals \\
+    CT: $x(t) = ce^{at}, c, a \in \mathbb{C}$ \\
+    DT: $x[n] = ca^n, c, a \in \mathbb{C}$ \\
+    $x(t) = e^{j\omega_0 t}$ periodic, fund. frequency $\omega_0$, fund. period $T=2\pi/|\omega_0|$ \\
+    $x[n] = e^{j\Omega_0 n}$ periodic in $n$ if and only if $\Omega_0 = 2\pi m/N$, for $m, N \in \mathbb{Z}, N>0$. If $\gcdop(|m|, N)=1$, fund. period is $N$. \\
+    $x[n] = e^{j\Omega n}$ periodic in $\Omega$, period $2\pi$.
+\end{itemize}
+
+% --- Section 3: From Midterm Sheet ---
+\section{Systems - Chapters 1 and 2}
+\begin{itemize}
+    \item Basic system properties \\
+    Memoryless: $y(t_0)$ depends only on $x(t_0)$ (or $y[n_0]$ on $x[n_0]$). \\
+    Invertible: Distinct inputs produce distinct outputs. \\
+    Causal: $y(t_0)$ depends only on $x(t)$ for $t \le t_0$ (or $y[n_0]$ on $x[k]$ for $k \le n_0$). \\
+    Stable (BIBO): If $|x(t)| \le \alpha < \infty \Rightarrow |y(t)| \le \beta < \infty$. \\
+    Time-invariant: Input $x(t-t_0) \Rightarrow$ output $y(t-t_0)$. \\
+    Linear: $S(ax_1+bx_2) = aS(x_1)+bS(x_2)$.
+    \item System impulse response $h(t)$ and step response $s(t)$.
+    \item LTI systems \\
+    The impulse response $h(t)$ or $h[n]$ characterizes the system. \\
+    CT: $y(t) = x(t) * h(t)$ \quad DT: $y[n] = x[n] * h[n]$
+    \item Relationship between impulse response and step response \\
+    $s(t) = \int_{-\infty}^t h(\tau)d\tau \quad h(t) = \frac{ds(t)}{dt}$ \\
+    $s[n] = \sum_{k=-\infty}^n h[k] \quad h[n] = s[n] - s[n-1]$
+    \item Convolution formulas (DT and CT) \\
+    $y[n] = \sum_{k=-\infty}^{\infty} x[k]h[n-k]$ \quad $y(t) = \int_{-\infty}^{\infty} x(\tau)h(t-\tau)d\tau$
+    \item Properties of convolution \\
+    Commutativity, associativity, distributivity over addition \\
+    $x(t) * \delta(t-t_0) = x(t-t_0)$; \quad $x[n] * \delta[n-n_0] = x[n-n_0]$ \\
+    $x(t) * u(t) = \int_{-\infty}^t x(\tau)d\tau$; \quad $x[n] * u[n] = \sum_{k=-\infty}^n x[k]$
+    \item Convolution of Causal Exponential Sequences\newline
+    $a^n u[n] \ast b^n u[n] = \frac{a^{n+1} - b^{n+1}}{a-b} u[n], \text{ for } a \neq b.$
+    \item Impulse response of serial and parallel LTI systems. \\
+    Serial: $h(t) = h_1(t) * h_2(t)$ \quad Parallel: $h(t) = h_1(t) + h_2(t)$
+    \item Impulse response and properties of LTI systems \\
+    Memoryless: $h(t) = a\delta(t)$ (CT); $h[n]=a\delta[n]$ (DT) \\
+    Invertible: $\exists g(t)$ s.t. $h(t) * g(t) = \delta(t)$. \\
+    Causal: $h(t)=0$ for $t<0$; $h[n]=0$ for $n<0$. \\
+    Stable (BIBO): $\int_{-\infty}^{\infty} |h(t)| dt < \infty$; $\sum_{n=-\infty}^{\infty} |h[n]| < \infty$.
+    \item Differentiation property of CT LTI systems: $x(t) \to y(t) \Rightarrow \frac{dx(t)}{dt} \to \frac{dy(t)}{dt}$
+    \item LTI systems defined by differential/difference equations \\
+    $\sum_{k=0}^N a_k \frac{d^k y(t)}{dt^k} = \sum_{k=0}^M b_k \frac{d^k x(t)}{dt^k}$ \\ $\sum_{k=0}^N a_k y[n-k] = \sum_{k=0}^M b_k x[n-k]$
+    \item Filters
+        \begin{itemize}
+        \item Non-recursive filters (FIR): $y[n] = \sum_{k=0}^M b_k x[n-k]$.
+        \item DT blur filter: $h[n] = \frac{1}{N}\sum_{k=0}^{N-1} \delta[n-k] = \frac{1}{N}(u[n] - u[n-N])$.
+        \item Recursive filters (IIR): $\sum a_k y[n-k] = \sum b_k x[n-k]$.
+        \item DT first order filter: $y[n] - ay[n-1] = x[n]$, $|a|<1$. Impulse response $h[n] = a^n u[n]$. If $a>0$, low-pass. If $a<0$, high-pass (alternating polarity).
+        \end{itemize}
+\end{itemize}
+
+% --- Section 4: From Midterm Sheet (with additions) ---
+\section{CT and DT Fourier Series - Chapter 3}
+\begin{itemize}
+    \item Key equations \\
+    CTFS for periodic $x(t)$, period $T$, $\omega_0 = 2\pi/T$ \\
+    Synthesis: $x(t) = \sum_{k=-\infty}^{\infty} a_k e^{jk\omega_0 t}$ \\
+    Analysis: $a_k = \frac{1}{T}\int_T x(t)e^{-jk\omega_0 t}dt$ \\
+    DTFS for periodic $x[n]$, period $N$, $\Omega_0 = 2\pi/N$ \\
+    Synthesis: $x[n] = \sum_{k=\langle N \rangle} a_k e^{jk\Omega_0 n}$ \\
+    Analysis: $a_k = \frac{1}{N}\sum_{n=\langle N \rangle} x[n]e^{-jk\Omega_0 n}$
+    \item Response of LTI system to complex exponential
+        \begin{itemize}
+            \item Eigenfunctions: $e^{st}$ (CT), $z^n$ (DT).
+            \item CT: $e^{st} \to H(s)e^{st}$, where $H(s) = \int_{-\infty}^{\infty} h(t)e^{-st}dt$ (Laplace Transform of $h(t)$). Convergence determined by ROC.
+            \item DT: $z^n \to H(z)z^n$, where $H(z) = \sum_{k=-\infty}^{\infty} h[k]z^{-k}$ (Z-Transform of $h[k]$). Convergence determined by ROC.
+        \end{itemize}
+    \item How to determine if system may be LTI by action on complex exponential signals: Check if eigenfunction property is satisfied. If violated, system is not LTI.
+    \item Filtering of periodic signal through an LTI system \\
+    $x(t) = \sum a_k e^{jk\omega_0 t} \to y(t) = \sum a_k H(jk\omega_0) e^{jk\omega_0 t}$ \\
+    $x[n] = \sum a_k e^{jk\Omega_0 n} \to y[n] = \sum a_k H(e^{jk\Omega_0}) e^{jk\Omega_0 n}$
+    \item Properties of CTFS/DTFS (Tables 3.1 \& 3.2) \\
+    Linearity, Time/Freq Shifting, Time Reversal/Scaling, Convolution, Multiplication, Parseval's Relation, Differentiation/Integration (CT), First Difference/Running Sum (DT).
+    \item FS and signal properties: $x$ real $\Leftrightarrow a_k=a_{-k}^*$; $x$ real \& even $\Leftrightarrow a_k$ real \& even; $x$ real \& odd $\Leftrightarrow a_k$ imaginary \& odd.
+    \item Finding system function from differential/difference equations \\
+    $H(s) = \frac{\sum_{k=0}^M b_k s^k}{\sum_{k=0}^N a_k s^k}$, then $s=j\omega$ for $H(j\omega)$. \\
+    $H(z) = \frac{\sum_{k=0}^M b_k z^{-k}}{\sum_{k=0}^N a_k z^{-k}}$, then $z=e^{j\omega}$ for $H(e^{j\omega})$.
+    \item Effect of LTI system with real $h$ on sinusoids \\
+    $\cos(\omega_0 t) \to |H(j\omega_0)| \cos(\omega_0 t + \angle H(j\omega_0))$
+\end{itemize}
+
+% --- Section 5: NEW from Review Sheet ---
+\section{CT Fourier Transform - Chapter 4}
+\begin{itemize}
+    \item Key equations
+        \begin{itemize}
+        \item Synthesis: $x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega)e^{j\omega t}d\omega$ \\
+        (e.g., to find $x(0) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\omega)d\omega$)
+        \item Analysis: $X(j\omega) = \int_{-\infty}^{\infty} x(t)e^{-j\omega t}dt$ \\
+        (e.g., to find DC content $X(j0) = \int_{-\infty}^{\infty} x(t)dt$)
+        \end{itemize}
+    \item Properties of CTFT (Table 4.1): Linearity, Time/Freq Shifting, Conjugation, Time Reversal, Time Scaling, Convolution, Multiplication, Differentiation, Integration.
+    \item Parseval's relation: $\int_{-\infty}^{\infty} |x(t)|^2 dt = \frac{1}{2\pi} \int_{-\infty}^{\infty} |X(j\omega)|^2 d\omega$
+    \item FT and signal properties:
+        \begin{itemize}
+        \item $x(t)$ real $\Leftrightarrow X(j\omega) = X^*(-j\omega)$ (conjugate symmetric)
+        \item $x(t)$ real and even $\Leftrightarrow X(j\omega)$ real and even
+        \item $x(t)$ real and odd $\Leftrightarrow X(j\omega)$ purely imaginary and odd
+        \item For real signals: $\Ev\{x(t)\} \leftrightarrow \text{Re}\{X(j\omega)\}$, $\Od\{x(t)\} \leftrightarrow j\text{Im}\{X(j\omega)\}$
+        \end{itemize}
+    \item Basic CTFT Pairs (Table 4.2)
+        \begin{itemize}
+        \item Periodic $x(t)=\sum a_k e^{jk\omega_0 t} \leftrightarrow X(j\omega) = 2\pi\sum a_k \delta(\omega-k\omega_0)$
+        \item $x(t)=1 \leftrightarrow 2\pi\delta(\omega)$
+        \item Periodic impulse train (picket fence) $\leftrightarrow$ periodic impulse train
+        \item Rectangular pulse $\leftrightarrow$ sinc function
+        \item Sinc function $\leftrightarrow$ rectangular pulse
+        \item $e^{-at}u(t), \text{Re}\{a\}>0 \leftrightarrow \frac{1}{a+j\omega}$
+        \end{itemize}
+    \item Systems from diff. eqns: $H(j\omega) = \frac{Y(j\omega)}{X(j\omega)} = \frac{\sum b_k (j\omega)^k}{\sum a_k (j\omega)^k}$
+    \item Filtering: $y(t) = x(t)*h(t) \leftrightarrow Y(j\omega)=X(j\omega)H(j\omega)$
+    \item Inverse systems: $h(t)*g(t)=\delta(t) \leftrightarrow H(j\omega)G(j\omega)=1$
+\end{itemize}
+
+% --- Section 6: NEW from Review Sheet ---
+\section{DT Fourier Transform - Chapter 5}
+\begin{itemize}
+    \item Key equations
+        \begin{itemize}
+        \item Synthesis: $x[n] = \frac{1}{2\pi} \int_{2\pi} X(e^{j\omega})e^{j\omega n}d\omega$ \\
+        (e.g., $x[0] = \frac{1}{2\pi} \int_{2\pi} X(e^{j\omega})d\omega$)
+        \item Analysis: $X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n]e^{-j\omega n}$ \\
+        (e.g., $X(e^{j0}) = \sum_{n=-\infty}^{\infty} x[n]$)
+        \end{itemize}
+    \item Periodicity: $X(e^{j\omega})$ is always periodic in $\omega$ with period $2\pi$.
+    \item Properties of DTFT (Table 5.1): Similar to CTFT.
+    \item Basic DTFT Pairs (Table 5.2):
+        \begin{itemize}
+        \item Periodic $x[n]=\sum a_k e^{jk\omega_0 n} \leftrightarrow X(e^{j\omega}) = 2\pi\sum_{l=-\infty}^\infty \sum_{k=\langle N \rangle} a_k \delta(\omega-k\omega_0 - 2\pi l)$
+        \item Others similar to CTFT (e.g., $a^n u[n] \leftrightarrow \frac{1}{1-ae^{-j\omega}}$ for $|a|<1$)
+        \end{itemize}
+    \item DTFT of a Shifted Causal Exponential\newline
+        $a^n u[n-n_0] \overset{\text{DTFT}}{\longleftrightarrow} \frac{a^{n_0} e^{-j\omega n_0}}{1-ae^{-j\omega}}$
+    \item Systems from diff. eqns: $H(e^{j\omega}) = \frac{\sum b_k e^{-j\omega k}}{\sum a_k e^{-j\omega k}}$. Inverse systems swap roles of $x[n], y[n]$. Use PFE and tables to find $h[n]$.
+    \item Filtering: $y[n]=x[n]*h[n] \leftrightarrow Y(e^{j\omega})=X(e^{j\omega})H(e^{j\omega})$
+    \item Filter frequency response derivation:
+        \begin{itemize}
+        \item Length-N blur filter: $H(e^{j\omega}) = \frac{1}{N}e^{-j\omega(N-1)/2}\frac{\sin(\omega N/2)}{\sin(\omega/2)}$
+        \item Recursive filter $y[n]-ay[n-1]=x[n]$: $H(e^{j\omega}) = \frac{1}{1-ae^{-j\omega}}$. $a>0$: low-pass, $a<0$: high-pass.
+        \end{itemize}
+\end{itemize}
+
+% --- Section 7: NEW from Review Sheet ---
+\section{Amplitude Modulation - Chapter 8}
+\begin{itemize}
+    \item Modulation: For a signal $x(t)$ bandlimited to $[-W, W]$ and carrier frequency $\omega_c > W$:
+        \begin{itemize}
+            \item With cosine carrier $y(t) = x(t)\cos(\omega_c t)$, the transform is\\ $Y(j\omega) = \frac{1}{2}[X(j(\omega-\omega_c)) + X(j(\omega+\omega_c))]$.
+            \item With sine carrier $y(t) = x(t)\sin(\omega_c t)$, the transform is\\ $Y(j\omega) = \frac{1}{2j}[X(j(\omega-\omega_c)) - X(j(\omega+\omega_c))]$.
+        \end{itemize}
+    \item Demodulation: $z(t) = y(t)c(t) = x(t)\cos^2(\omega_c t)$
+        \begin{itemize}
+            \item $Z(j\omega) = \frac{1}{2}Y(j\omega)*C(j\omega) = \frac{1}{4}X(j(\omega-2\omega_c)) + \frac{1}{2}X(j\omega) + \frac{1}{4}X(j(\omega+2\omega_c))$
+        \end{itemize}
+    \item Signal recovery: If $\omega_c > W$, pass $z(t)$ through an ideal LPF with cutoff $\omega_{co} \in (W, 2\omega_c-W)$ and gain 2.
+    \item Effects of demodulating with different sinusoid:
+        \begin{itemize}
+            \item Freq mismatch: $\cos(\omega_c t)\sin(\omega_e t)$ with $\omega_c \neq \omega_e$.
+            \item Phase mismatch: $\cos(\omega_c t)\sin(\omega_c t) = \frac{1}{2}\sin(2\omega_c t)$. LPF output is 0.
+        \end{itemize}
+\end{itemize}
+
+% --- Section 8: NEW from Review Sheet ---
+\section{Sampling Theory - Chapter 7}
+\begin{itemize}
+    \item \textbf{Impulse train sampling}
+    
+    CT signal, band-limited to $[-W,W]$:
+    $x(t) \leftrightarrow X(j\omega), X(j\omega) = 0$, for $|\omega| > W$
+    
+    Impulse train, sampling period $T$, sampling frequency $\omega_s = 2\pi/T$:
+    $p(t) = \sum_{n=-\infty}^\infty \delta(t - nT) \leftrightarrow P(j\omega) = \frac{2\pi}{T} \sum_{k=-\infty}^\infty \delta(\omega - k\omega_s)$
+    
+    Sampled signal:
+    $x_p(t) = x(t)p(t) = \sum_{n=-\infty}^\infty x(nT)\delta(t-nT) \leftrightarrow X_p(j\omega) = \frac{1}{T} \sum_{k=-\infty}^\infty X(j(\omega - k\omega_s))$
+
+    \item \textbf{Sampling Theorem:}
+    
+    Let $x(t)$ be band-limited to $[-W,W]$. Then $x(t)$ is uniquely determined by its samples $x(nT)$, $n \in \mathbb{Z}$ if $\omega_s = 2\pi/T > 2W$.
+    
+    The signal $x(t)$ can be reconstructed from the signal $x_p(t)$ using a \textbf{low-pass} filter with cutoff frequency $\omega_0 = \omega_s/2 = \pi/T$ and gain $T$.
+    
+    If $\omega_s < 2W$, then \textbf{aliasing} occurs, and $x(t)$ cannot be reconstructed from $x_p(t)$.
+
+    \item Using CTFT properties and transform pairs to determine the maximum frequency of a signal $y(t)$ obtained from $x(t)$ by various operations, e.g., conjugation, time-shifting, combining with another signal by linear operation, conjugation, multiplication, etc.
+
+    \item \textbf{DT processing of CT signals}
+    
+    Define $x(t), p(t), x_p(t)$ as above.
+    
+    Define $x_d[n] = x(nT), n \in \mathbb{Z}$
+    
+    Using formula for $x_p(t)$, rewrite $X_p(j\omega) = \sum_{n=-\infty}^\infty x(nT)e^{-j\omega nT}$
+    
+    Using DTFT, $X_d(e^{j\Omega}) = \sum_{n=-\infty}^\infty x_d[n]e^{-j\Omega n} = \sum_{n=-\infty}^\infty x(nT)e^{-j\Omega n}$
+    
+    Thus, $X_d(e^{j\Omega}) = X_p(j\Omega/T)$ or $X_d(e^{j\omega T}) = X_p(j\omega)$.
+    
+    The plot of $X_d(e^{j\Omega})$ is obtained from the plot of $X_p(j\omega)$ by multiplying the $\omega$-axis labels of $X_p(j\omega)$ by T. So, $\omega_s = 2\pi/T$ becomes $\Omega = 2\pi$.
+
+    \item \textbf{Example of aliasing when undersampling a sinusoidal signal}
+    
+    Change of frequency and possible phase shift (reversal)
+
+    \item \textbf{Alternating impulse train sampling technique}
+    
+    $x_p(t) = \sum_{n=-\infty}^\infty x(nT)(-1)^n\delta(t-nT) \leftrightarrow X_p(j\omega) = \frac{2}{T}\sum_{k=-\infty}^\infty X(j(\omega-(2k+1)\omega_s))$
+
+    \item \textbf{Bandpass sampling}
+    
+    For $X(j\omega) = 0$ outside $\omega_L \le |\omega| \le \omega_H$, sampling frequency $\frac{2\omega_H}{n} \le \omega_s \le \frac{2\omega_L}{n-1}$ for any $1 \le n \le \lfloor \frac{\omega_H}{\omega_H-\omega_L} \rfloor$ allows reconstruction.
+\end{itemize}
+
+% --- Section 9: NEW from Review Sheet ---
+\section{Laplace Transform - Chapter 9}
+\begin{itemize}
+    \item Laplace Transform: $X(s) = \int_{-\infty}^{\infty} x(t)e^{-st}dt$, for $s=\sigma+j\omega \in \mathbb{C}$.
+    \item Region of Convergence (ROC): The set of $s \in \mathbb{C}$ for which $X(s)$ exists.
+    \item Relation to FT: If ROC includes the $j\omega$-axis ($\sigma=0$), then $X(j\omega)$ is the FT of $x(t)$.
+    \item Basic LT examples:
+        \begin{itemize}
+            \item Right-sided: $e^{-at}u(t) \leftrightarrow \frac{1}{s+a}$, ROC: Re$\{s\} > -\text{Re}\{a\}$.
+            \item Left-sided: $-e^{-at}u(-t) \leftrightarrow \frac{1}{s+a}$, ROC: Re$\{s\} < -\text{Re}\{a\}$.
+        \end{itemize}
+    \item Rational $X(s)$, poles, zeros, and pole-zero plots.
+    \item The 8-fold way of the ROC:
+        \begin{itemize}
+            \item ROC is composed of strips parallel to the $j\omega$-axis.
+            \item ROC does not contain any poles.
+            \item If $x(t)$ is finite duration, ROC is the entire $s$-plane.
+            \item If $x(t)$ is right-sided, ROC is a right half-plane.
+            \item If $x(t)$ is left-sided, ROC is a left half-plane.
+            \item If $x(t)$ is two-sided, ROC is a vertical strip.
+        \end{itemize}
+    \item ROC and LTI system properties for system $H(s)$:
+        \begin{itemize}
+            \item Causal $\Rightarrow$ ROC is a right half-plane. (If rational, RHP to the right of rightmost pole).
+            \item Stable $\Leftrightarrow$ ROC contains the $j\omega$-axis.
+            \item Causal and Stable $\Leftrightarrow$ All poles are in the left half-plane.
+        \end{itemize}
+    \item Inverse LT: Use partial fraction expansion (PFE) and tables of LT pairs.
+    \item Geometric evaluation of Fourier Transform using pole-zero plot.
+        \begin{itemize}
+            \item Magnitude $|H(j\omega)|$ using lengths of vectors from poles and zeros to $j\omega$, i.e., $(j\omega - \rho)$ and $(j\omega - \zeta)$.
+            \item Phase $\angle H(j\omega)$ using angles of vectors from poles and zeros to $j\omega$, i.e., $(j\omega - \rho)$ and $(j\omega - \zeta)$.
+        \end{itemize}
+    \item Properties of LT (Table 9.1): Linearity, Time Shifting, Shifting in $s$-domain, Time Scaling, Conjugation, Convolution, Differentiation, Integration.
+    \item Analysis of LTI systems from diff. eqns:
+        \begin{itemize}
+            \item System function: $H(s) = \frac{Y(s)}{X(s)} = \frac{\sum b_k s^k}{\sum a_k s^k}$.
+            \item Convert to rational $H(s)$, use PFE, invert using tables. ROC is determined by system properties (causal, stable, etc.).
+        \end{itemize}
+    \item System function algebra:
+        \begin{itemize}
+            \item Serial: $H(s) = H_1(s)H_2(s)$
+            \item Parallel: $H(s) = H_1(s) + H_2(s)$
+            \item Feedback (positive): $H(s) = \frac{H_{ff}(s)}{1 - H_{ff}(s)H_{fb}(s)}$
+        \end{itemize}
+    \item \textbf{Block Diagram (Direct Form II)} for $H(s) = \frac{N(s)}{D(s)}$: To draw the diagram for $H(s) = \frac{\sum b_k s^k}{\sum a_k s^k}$:
+        \begin{itemize}
+            \item Decompose into $H(s) = H_1(s)H_2(s)$ where $H_1(s)=N(s)$ (zeros) and $H_2(s)=1/D(s)$ (poles).
+            \item Let $Y(s) = H_1(s)[H_2(s)X(s)]$. Define an intermediate signal $F(s) = H_2(s)X(s)$.
+            \item \textbf{Feedback part} (from $F(s)D(s) = X(s)$): Rearrange for the highest derivative term (assuming $a_N=1$): $s^N F(s) = X(s) - \sum_{k=0}^{N-1} a_k s^k F(s)$. This defines the integrator chain and feedback loops (scaled by $-a_k$) that create $F(s)$ from input $X(s)$.
+            \item \textbf{Feedforward part} (from $Y(s)=N(s)F(s)$): Expand as $Y(s) = \sum_{k=0}^M b_k s^k F(s)$. The output $Y(s)$ is a weighted sum (scaled by $b_k$) of the signals tapped from the integrator chain.
+        \end{itemize}
+\end{itemize}
+
+% --- Extra ---
+\section{Extra Junk}
+\begin{itemize}
+    \item Unity gain means gain of 1
+\end{itemize}
+
+% --- NEW SECTION: EXAMPLES ---
+\section{Examples}
+\subsubsection*{2022 Problem 3 [Modulation]}
+\noindent\textbf{Givens:}
+\begin{itemize}
+    \item $x(t) = \frac{\sin(20t)}{\pi t} \leftrightarrow X(j\omega) = \begin{cases} 1, & |\omega| < 20 \\ 0, & |\omega| > 20 \end{cases}$
+    \item $y(t) = x(t)\cos(30t)$
+    \item $w(t)$ is the output of $y(t)$ passed through BPF: $H_{BP}(j\omega)=1$ for $30 < |\omega| < 50$.
+    \item $z(t) = w(t)\cos(40t)$
+    \item $r(t)$ is the output of $z(t)$ passed through LPF with gain 2 and cutoff $\omega_c = 20$.
+\end{itemize}
+\noindent\textbf{Part (a): Determine $R(j\omega)$ in terms of $X(j\omega)$.}
+\begin{itemize}
+    \item \textbf{Step 1: Find $Y(j\omega)$.} Modulation shifts the spectrum: \\
+    $Y(j\omega) = \frac{1}{2}[X(j(\omega-30)) + X(j(\omega+30))]$. This creates copies of $X(j\omega)$ centered at $\pm 30$. The positive frequency part is non-zero for $10 < \omega < 50$.
+    \item \textbf{Step 2: Find $W(j\omega)$.} Apply the band-pass filter: \\
+    $W(j\omega) = Y(j\omega)H_{BP}(j\omega)$. The filter passes frequencies from $30 < |\omega| < 50$. This isolates the upper portion of the modulated spectrum. The resulting spectrum $W(j\omega)$ is what you would get by modulating $x_1(t) = \frac{\sin(10t)}{\pi t}$ (whose spectrum $X_1(j\omega)$ is a rect from -10 to 10) with $\cos(40t)$.
+    \item \textbf{Step 3: Find $Z(j\omega)$.} Demodulation by $\cos(40t)$: \\
+    $z(t) = w(t)\cos(40t)$ effectively demodulates the signal.
+    $Z(j\omega) = \frac{1}{2}[W(j(\omega-40)) + W(j(\omega+40))]$. This process creates a baseband component and high-frequency components. The baseband component is $\frac{1}{2} X_1(j\omega)$, where $X_1(j\omega)$ is a rect from -10 to 10.
+    \item \textbf{Step 4: Find $R(j\omega)$.} Apply the low-pass filter: \\
+    The LPF has gain 2 and $\omega_c=20$. It passes the baseband component of $Z(j\omega)$ entirely. \\
+    $R(j\omega) = 2 \times (\frac{1}{2} X_1(j\omega)) = X_1(j\omega)$.
+    \item \textbf{Step 5: Relate to $X(j\omega)$.} $X_1(j\omega)$ is a rect from -10 to 10. $X(j\omega)$ is a rect from -20 to 20. By frequency scaling, a signal with transform $X(j2\omega)$ would have its frequency axis compressed by a factor of 2. Thus, $X(j2\omega)$ is a rect from -10 to 10.
+    \item \textbf{Final Answer (a):} $R(j\omega) = X(j2\omega)$.
+\end{itemize}
+\noindent\textbf{Part (b): Determine the output signal $r(t)$.}
+\begin{itemize}
+    \item We found $R(j\omega) = X(j2\omega)$. We find $r(t)$ by taking the inverse transform. Using the time-scaling property $x(at) \leftrightarrow \frac{1}{|a|}X(j\frac{\omega}{a})$, we can see that the transform $X(j2\omega)$ corresponds to the time-domain signal $\frac{1}{2}x(t/2)$.
+    \item $r(t) = \frac{1}{2}x(t/2) = \frac{1}{2} \frac{\sin(20(t/2))}{\pi(t/2)} = \frac{1}{2} \frac{\sin(10t)}{\pi t / 2} = \frac{\sin(10t)}{\pi t}$.
+    \item \textbf{Final Answer (b):} $r(t) = \frac{\sin(10t)}{\pi t}$.
+\end{itemize}
+
+\subsubsection*{2022 Problem 4 [Sampling Theory]}
+\noindent\textbf{Given:} Signal $x(t)$ is bandlimited to $W$, so $X(j\omega)=0$ for $|\omega|>W$. Find the minimum sampling frequency $\omega_s$ to reconstruct $y(t)$.
+
+\noindent\textbf{Part (a): $y(t) = (x(3t-1))^2$}
+\begin{itemize}
+    \item \textbf{Step 1: Bandwidth of $z(t) = x(3t-1)$.} The signal $x(t)$ is scaled in time by $a=3$. This expands the bandwidth by a factor of 3. The time shift does not affect bandwidth.
+    $x(3t) \leftrightarrow \frac{1}{3}X(j\frac{\omega}{3})$. Bandwidth becomes $3W$.
+    $x(3t-1) = x(3(t-1/3)) \leftrightarrow \frac{1}{3}e^{-j\omega/3}X(j\frac{\omega}{3})$. Bandwidth is $W_z=3W$.
+    \item \textbf{Step 2: Bandwidth of $y(t)=z(t)^2$.} Squaring a signal in the time domain corresponds to convolving its spectrum with itself: $Y(j\omega) = \frac{1}{2\pi}Z(j\omega)*Z(j\omega)$.
+    \item The bandwidth of the convolution of two signals is the sum of their individual bandwidths.
+    $W_y = W_z + W_z = 3W + 3W = 6W$.
+    \item \textbf{Step 3: Minimum Sampling Frequency.} The Nyquist rate requires the sampling frequency $\omega_s$ to be greater than twice the maximum frequency in the signal.
+    $\omega_s > 2W_y = 2(6W) = 12W$.
+    \item \textbf{Final Answer (a):} $\omega_s > 12W$.
+\end{itemize}
+\noindent\textbf{Part (b): $y(t) = x(t) * \frac{\sin(2Wt)}{\pi t}$}
+\begin{itemize}
+    \item \textbf{Step 1: Identify the operation.} This is a convolution in the time domain, which corresponds to multiplication in the frequency domain: $Y(j\omega) = X(j\omega)Z(j\omega)$.
+    \item \textbf{Step 2: Find the spectrum $Z(j\omega)$.}
+    Let $z(t) = \frac{\sin(2Wt)}{\pi t}$. From the FT pair table, its transform is a rectangular pulse:
+    $Z(j\omega) = \begin{cases} 1, & |\omega| < 2W \\ 0, & |\omega| > 2W \end{cases}$.
+    \item \textbf{Step 3: Perform multiplication in frequency.}
+    $Y(j\omega) = X(j\omega) \times Z(j\omega)$.
+    We know $X(j\omega)=0$ for $|\omega|>W$.
+    In the range where $X(j\omega)$ can be non-zero (i.e., $|\omega|<W$), the value of $Z(j\omega)$ is always 1.
+    Therefore, the product is simply $X(j\omega)$.
+    \item \textbf{Step 4: Determine bandwidth of $Y(j\omega)$.} Since $Y(j\omega) = X(j\omega)$, the bandwidth of $y(t)$ is the same as the bandwidth of $x(t)$, which is $W$.
+    \item \textbf{Step 5: Minimum Sampling Frequency.}
+    $\omega_s > 2W_y = 2W$.
+    \item \textbf{Final Answer (b):} $\omega_s > 2W$.
+\end{itemize}
+\subsubsection*{2021 Problem 6 [Block Diagram]}
+\begin{center}
+    \includegraphics[width=1\columnwidth]{Block.png}
+\end{center}
+
+
+
+\end{document}

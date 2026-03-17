@@ -1,0 +1,384 @@
+\documentclass[10pt]{article}
+\usepackage{multicol}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage[margin=0.35in, bottom=0.35in, top=0.35in]{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+\AtBeginDocument{\scriptsize}
+
+\setstretch{0.94}
+
+\setlist{nosep, itemsep=0pt, parsep=0pt, partopsep=0pt, topsep=0pt}
+\setlist[itemize]{leftmargin=1em}
+\setlist[itemize,2]{leftmargin=0.8em}
+
+\titleformat{\section}{\small\bfseries}{\thesection}{0.5em}{}
+\titlespacing*{\section}{0pt}{0.45\baselineskip}{0.15\baselineskip}
+\titleformat{\subsection}{\footnotesize\bfseries}{\thesubsection}{0.4em}{}
+\titlespacing*{\subsection}{0pt}{0.30\baselineskip}{0.08\baselineskip}
+
+\pagestyle{empty}
+\setlength{\columnsep}{0.25cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6pt}
+\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
+\begin{document}
+\begin{multicols*}{2}
+
+\section{Probability Axioms \& Rules}
+$P(S)=1$, $P(\emptyset)=0$, $0 \le P(A) \le 1$ \\
+$P(A) = P(A \cap B) + P(A \cap B^c)$ \\
+$P(A \cup B) = P(A) + P(B) - P(A \cap B)$ \\
+De Morgan: $(A \cup B)^c = A^c \cap B^c$,\; $(A \cap B)^c = A^c \cup B^c$ \\
+Disjoint ($A \cap B = \emptyset$): $P(A \cup B) = P(A) + P(B)$ \\
+Classical: $P(E) = \text{\# desired} / \text{\# total}$
+
+\subsection{Conditional Probability}
+$P(E|F) = \dfrac{P(E \cap F)}{P(F)}$, \quad $0 \le P(E|F) \le 1$, \quad $P(S|F) = 1$ \\[1pt]
+$P(E \cap F) = P(E|F)P(F) = P(F|E)P(E)$ \\
+\textit{Use when:} given that something already happened, find new $P$.
+
+\subsection{Chain Rule}
+$P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2|A_1)\,P(A_3|A_1 A_2) \cdots P(A_n|A_1 \cdots A_{n-1})$ \\
+\textit{Use when:} things happening \textbf{in sequence} (draw w/o replacement, etc.)
+
+\subsection{Law of Total Probability}
+$P(B) = \sum_i P(B|A_i)P(A_i)$ \quad ($A_i$ partition $S$) \\
+Two-event: $P(B) = P(B|A)P(A) + P(B|A^c)P(A^c)$ \\
+\textit{Use when:} want $P(B)$ but it depends on \textbf{which scenario} happened (coin A vs B, defective vs good, etc.). Split into cases.
+
+\subsection{Bayes' Formula}
+$P(A_i|B) = \dfrac{P(B|A_i)\,P(A_i)}{\sum_j P(B|A_j)\,P(A_j)}$ \\[1pt]
+\textit{Use when:} you observe a \textbf{result} and want to find which \textbf{cause} is most likely. ``Flips'' $P(B|A) \to P(A|B)$.
+
+\section{Independence}
+$E \perp F \iff P(E \cap F) = P(E)\,P(F) \iff P(E|F) = P(E)$ \\
+If $E \perp F$: then $E \perp F^c$,\; $E^c \perp F$,\; $E^c \perp F^c$. \\
+Disjoint events are \textbf{NOT} independent (unless one has $P=0$). \\
+$A,B,C$ mutually indep.\ requires \textbf{all pairwise} indep.\ \textbf{AND} $P(ABC)=P(A)P(B)P(C)$. \\
+$P(ABC)=P(A)P(B)P(C)$ alone does \textbf{not} imply pairwise indep.
+
+\textbf{Conditional indep.:} $A \perp B | C$: $P(A \cap B|C) = P(A|C)\,P(B|C)$ \\
+$\implies P(A|BC) = P(A|C)$ (given $C$, knowing $B$ gives no info on $A$)
+
+\textbf{Attraction/Repulsion:} \\
+$P(AB) < P(A)P(B)$: repulsion \;\; $P(AB) = P(A)P(B)$: indep. \\
+$P(AB) > P(A)P(B)$: attraction \;\; (disjoint $=$ extreme repulsion) \\
+If $A \perp B$: $P(A \cap B^c) = P(A)(1-P(B))$ \; (useful shortcut)
+
+\textbf{Shared elements shortcut} (equally likely outcomes only): \\
+$|E \cap X| = |X| \cdot P(E)$;\; if this holds, $E \perp X$.
+
+\section{Geometric Series}
+Infinite: $\sum_{n=0}^{\infty} ar^n = \dfrac{a}{1-r}$, $|r|<1$ \qquad
+Finite: $\sum_{n=0}^{N-1} r^n = \dfrac{1-r^N}{1-r}$ \\
+\textit{Use when:} summing $(1\!-\!p)^k$ terms, e.g.\ geometric PMF sums.
+
+\section{Random Variables \& CDF}
+$X: S \to \mathbb{R}$.\quad $F_X(u) = P(X \le u)$ \\
+$0 \le F \le 1$;\; $F(-\infty)=0$;\; $F(\infty)=1$;\; non-decreasing;\; right-continuous \\
+$P(X > u) = 1 - F(u)$ \qquad $P(X = u) = F(u) - F(u^-)$ \\
+$P(a < X \le b) = F(b) - F(a)$ \qquad $P(a \le X \le b) = F(b) - F(a^-)$ \\
+If $F$ continuous at $a$: $P(X=a)=0$, all interval forms equal.
+
+\subsection{Discrete R.V.\ -- PMF}
+Staircase CDF; $P(X=a) > 0$;\; $p_X(u) = P(X=u)$;\; $\sum_u p(u) = 1$
+
+\subsection{Continuous R.V.\ -- PDF}
+Smooth CDF; $P(X=a)=0$;\; $f_X(u) = dF_X/du$;\; $\int f(u)\,du = 1$ \\
+$P(a \le X \le b) = \int_a^b f_X(u)\,du$;\quad $F_X(u) = \int_{-\infty}^{u} f_X(z)\,dz$ \\
+PDF can be $>1$ (area is $P$, not value). \\
+PDF on $(a,b)$ only $\Rightarrow$ CDF has 3 pieces ($0$, ramp, $1$).
+
+\section{Distributions -- Formulas \& Recognition}
+
+\subsection{Bernoulli: $X \sim \text{Ber}(p)$}
+$P(X\!=\!1)=p$,\; $P(X\!=\!0)=1-p$.\;
+$E[X]=p$,\; $\text{Var}=p(1-p)$. \\
+Scaled: $W = (b\!-\!a)X + a$: $E=(b\!-\!a)p+a$, $\text{Var}=(b\!-\!a)^2p(1\!-\!p)$ \\
+\textit{Recognize:} single trial, two outcomes, PMF has 2 spikes. R.v.\ takes only 2 distinct values.
+
+\subsection{Binomial: $X \sim \text{Bin}(n,p)$}
+$P(X\!=\!k) = \binom{n}{k} p^k (1-p)^{n-k}$, $k=0,\ldots,n$;\;
+$\binom{n}{k} = \frac{n!}{k!(n-k)!}$ \\
+$E[X] = np$,\; $\text{Var}(X) = np(1-p)$ \\
+$X\!\sim\!\text{Bin}(n_1,p)$, $Y\!\sim\!\text{Bin}(n_2,p)$ indep.: $X+Y \sim \text{Bin}(n_1\!+\!n_2, p)$ \\
+\textit{Recognize:} (1) \textbf{fixed \#} of trials, (2) trials \textbf{independent}, (3) \textbf{two} possible outcomes, (4) \textbf{constant} $p$. Asks: ``how many successes?''
+
+\subsection{Poisson: $X \sim \text{Pois}(\lambda)$}
+$P(X\!=\!k) = \frac{e^{-\lambda}\lambda^k}{k!}$, $k=0,1,2,\ldots$\;\;
+$E[X] = \lambda$,\; $\text{Var}(X) = \lambda$ \\
+\textit{Recognize:} ``how many events in a fixed time/space?'' $\lambda$ = average rate. E.g.\ ``how many texts in the next hour?'' ($\lambda = 4$/hr).
+
+\subsection{Geometric: $X \sim \text{Geo}(p)$}
+$P(X\!=\!k) = p(1-p)^{k-1}$, $k=1,2,\ldots$\;\;
+$P(X > k) = (1-p)^k$ \\
+$F_X(u) = 1-(1-p)^{\lfloor u \rfloor}$;\;\;
+$E[X] = 1/p$,\; $\text{Var} = (1-p)/p^2$ \\
+\textit{Recognize:} ``how many trials until the \textbf{first} success?'' Indep.\ trials, constant $p$, waiting for 1st success. \textbf{Memoryless} (discrete).
+
+\subsection{Negative Binomial}
+$P(X\!=\!n) = \binom{n-1}{r-1} p^r (1-p)^{n-r}$, $n = r, r\!+\!1, \ldots$ \\
+\textit{Recognize:} ``how many trials to get $r$ successes?'' (Geometric is $r=1$ case.)
+
+\subsection{Uniform Continuous: $X \sim U(a,b)$}
+$f_X(u) = \frac{1}{b-a}$, $a \le u \le b$;\;\;
+$F_X(u) = \frac{u-a}{b-a}$ \\
+$E[X] = \frac{a+b}{2}$,\; $\text{Var} = \frac{(b-a)^2}{12}$ \\
+$P(c < X < d) = \frac{d-c}{b-a}$;\; on $U(0,1)$: $P(c<X<d) = d - c$ \\
+\textit{Recognize:} all values equally likely in a range; flat PDF.
+
+\subsection{Gaussian (Normal): $X \sim N(m, \sigma^2)$}
+$f_X(u) = \frac{1}{\sqrt{2\pi\sigma^2}}\, e^{-(u-m)^2/(2\sigma^2)}$ \;\;
+$E[X]=m$,\; $\text{Var}=\sigma^2$ \\
+Standard: $Z \sim N(0,1)$, CDF $= \Phi(z)$, $\Phi(-a) = 1 - \Phi(a)$ \\
+Convert: $F_X(u) = \Phi\!\left(\frac{u - m}{\sigma}\right)$ \\
+Linear transform: $Y = aX + b \implies Y \sim N(am+b,\; a^2\sigma^2)$ \\
+\textit{Recognize:} bell-shaped; linear combo of Gaussians is Gaussian. \\
+\textbf{Useful $\Phi$ values:} $\Phi(1)\!\approx\!0.841$, $\Phi(2)\!\approx\!0.977$, $\Phi(3)\!\approx\!0.999$ \\
+68-95-99.7 rule: $P(|X\!-\!m|<k\sigma)$ for $k=1,2,3$. \\
+\textbf{Mean from quadratic exponent:} if exponent is $-ax^2 + bx$, mean $= b/(2a)$
+
+\subsection{Exponential: $X \sim \text{Exp}(\lambda)$}
+$f_X(u) = \lambda e^{-\lambda u}$, $u \ge 0$;\;\; $F_X(u) = 1 - e^{-\lambda u}$ \\
+Survival: $P(X > u) = e^{-\lambda u}$;\;\; $E[X] = 1/\lambda$,\; $\text{Var} = 1/\lambda^2$ \\
+\textbf{Memoryless:} $P(X > u+v \mid X > u) = P(X > v)$ \\
+Min: $Y = \min(X_1,\ldots,X_n)$, $X_i \sim \text{Exp}(\lambda_i)$ indep. $\Rightarrow Y \sim \text{Exp}(\sum \lambda_i)$ \\
+$P(X < Y) = \lambda_X/(\lambda_X + \lambda_Y)$ for indep.\ exponentials. \\
+\textit{Recognize:} waiting time until event; ``how long until\ldots ?''; continuous memoryless. PDF is decaying exponential.
+
+\subsection{Kernel Matching}
+\textit{Use when:} problem guarantees a valid PDF; match the kernel to a known distribution. \\
+\textbf{Domain clues:} $-\infty < x < \infty$: Normal;\; $0<x<1$: Beta;\; $x>0$: Exp/Gamma. \\
+\textbf{Completing-the-square trap:} $\propto e^{-ax^2+bx}$ is Normal---complete the square to get $e^{-a(x-b/2a)^2}$, read off mean $= b/(2a)$, $\sigma^2 = 1/(2a)$.
+
+\section{Expected Value}
+Discrete: $E[X] = \sum u\, p_X(u)$ \quad Continuous: $E[X] = \int u\, f_X(u)\,du$ \\
+$E[g(X)] = \sum g(u)\,p_X(u)$ or $\int g(u)\,f_X(u)\,du$ \\
+$E[g(X,Y)] = \sum\sum g(u,v)\, p_{X,Y}$ or $\iint g(u,v)\, f_{X,Y}\,du\,dv$ \\
+\textbf{Linearity:} $E[aX+b] = aE[X]+b$;\; $E[X+Y] = E[X] + E[Y]$ \textbf{always} \\
+Bounded r.v.: $E[X] = \int_0^{\infty}\!(1-F(u))\,du - \int_{-\infty}^{0}\! F(u)\,du$ \\
+\textbf{Indicator} ($I \in \{0,1\}$): $E[I] = P(\text{event})$. Break complex r.v.\ into sum of indicators. \\
+\textit{Use indicators when:} counting something (e.g.\ \# of matches, \# correct). \\
+Step-fn PDF: $E[X] = \sum(\text{Area}_i \cdot \text{midpoint}_i)$ \\
+\textit{Use centroid when:} uniform joint PDF or piecewise-constant PDF.
+
+\section{Moments \& Variance}
+$\text{Var}(X) = E[X^2] - (E[X])^2$ \qquad $\sigma_X = \sqrt{\text{Var}(X)}$ \\
+$\text{Var}(a + bX) = b^2 \text{Var}(X)$ \quad $\text{Var}(X + c) = \text{Var}(X)$ \\
+$E[X^2] = \text{Var}(X) + (E[X])^2$
+
+\section{Functions of a R.V.}
+\textbf{Discrete:} $P(Y\!=\!v) = \sum_{\{x: g(x)=v\}} P(X\!=\!x)$ \\
+\textbf{Change of var.\ (monotonic):} $f_Y(y) = f_X(g^{-1}(y))\,|d g^{-1}/dy|$ \\
+\textit{Use when:} $Y = g(X)$ with $g$ \textbf{strictly} increasing or decreasing. \\
+\textbf{Linear:} $Y = aX+b$: $f_Y(u) = \frac{1}{|a|} f_X\!\left(\frac{u-b}{a}\right)$ \\
+\textbf{CDF method (general):} \\
+\textit{Use when:} $g$ is \textbf{not monotonic}, or you're unsure. Always works. \\
+1) $F_Y(u) = P(g(X) \le u)$ $\to$ solve for $X$ $\to$ express via $F_X$ $\to$ differentiate.
+
+\subsection{Leibniz Rule}
+$\frac{d}{du}\!\int_{h(u)}^{g(u)}\! f(z)\,dz = f(g(u))\,g'(u) - f(h(u))\,h'(u)$ \\
+\textit{Use when:} differentiating a CDF that has variable limits (CDF method step).
+
+\section{Joint Distributions}
+Joint CDF: $F_{X,Y}(u,v) = P(X \le u,\, Y \le v)$ \\
+Marginals: $F_X(u) = F_{X,Y}(u, \infty)$;\; $F_Y(v) = F_{X,Y}(\infty, v)$ \\
+Joint $\to$ marginals loses info (can't recover joint from marginals alone).
+
+\textbf{Discrete:} $p_{X,Y}(u,v) = P(X\!=\!u, Y\!=\!v)$. \\
+Marginal: $p_X(u) = \sum_v p_{X,Y}(u,v)$ (``sum out the other'').
+
+\textbf{Continuous:} $P((X,Y) \in T) = \iint_T f_{X,Y}\,du\,dv$;\; $\iint f_{X,Y}\,du\,dv = 1$ \\
+$f_{X,Y} = \frac{\partial^2 F_{X,Y}}{\partial u\, \partial v}$;\;\;
+Marginal: $f_X(u) = \int f_{X,Y}(u,v)\,dv$ (``integrate out the other'').
+
+\textbf{Uniform joint:} $f = 1/\text{Area}(T)$ on region $T$. \\
+$P = \text{valid area} / \text{total area}$;\; marginal PDF = (slice length) $/$ Area. \\
+\textit{Recognize:} ``point chosen uniformly at random in a region.''
+
+\subsection{Independence of R.V.s}
+$X \perp Y \iff f_{X,Y} = f_X f_Y$ (or PMF/CDF version). \\
+\textit{Test:} if $f_{X,Y}(u,v) = g(u) \cdot h(v)$ over a \textbf{rectangular} domain, indep. \\
+If $X \perp Y$: $E[XY] = E[X]E[Y]$;\; $\text{Cov}=0$;\; $\text{Var}(X+Y)=\text{Var}(X)+\text{Var}(Y)$
+
+\subsection{Conditional Distribution}
+$p_{X|Y}(x|y) = \frac{p_{X,Y}(x,y)}{p_Y(y)}$;\quad $f_{X|Y}(x|y) = \frac{f_{X,Y}(x,y)}{f_Y(y)}$ \\
+\textit{Use when:} given $Y=y$, find distribution of $X$. \\
+If $X \perp Y$: $f_{X|Y}(x|y) = f_X(x)$ (conditioning gives no new info).
+
+\subsection{Conditional Expectation}
+$E[X|Y\!=\!y] = \sum x\, p_{X|Y}(x|y)$ or $\int x\, f_{X|Y}(x|y)\,dx$ \\
+\textbf{Law of total expectation:} $E[X] = E[E[X|Y]]$ \\
+\textbf{Variance decomposition:} $\text{Var}(X) = E[\text{Var}(X|Y)] + \text{Var}(E[X|Y])$ \\
+\textit{Use when:} $E[X]$ or $\text{Var}(X)$ is hard directly; condition on easier $Y$.
+
+\section{Sum of R.V.s: $Z = X + Y$ (Convolution)}
+General: $f_Z(z) = \int f_{X,Y}(z\!-\!v,\, v)\,dv$ \\
+Indep.: $f_Z = (f_X * f_Y)(z) = \int f_X(z\!-\!v)\,f_Y(v)\,dv$ \\
+\textit{Use when:} want PDF of a \textbf{sum} (or difference) of two r.v.s.
+
+\section{Max and Min of R.V.s}
+$W = \max(X_1,\ldots,X_n)$: $F_W(t) = \prod F_{X_i}(t)$ (indep.) \\
+i.i.d.: $F_W = [F_X]^n$;\; $f_W = n[F_X]^{n-1} f_X$ \\
+$Z = \min(X_1,\ldots,X_n)$: $1\!-\!F_Z(t) = \prod(1\!-\!F_{X_i}(t))$ (indep.) \\
+i.i.d.: $F_Z = 1 - [1\!-\!F_X]^n$ \\
+$n$ i.i.d.\ $U(0,1)$: Max $F\!=\!t^n$, $f\!=\!nt^{n-1}$;\; Min $F\!=\!1\!-\!(1\!-\!t)^n$ \\
+\textit{Use when:} ``best of $n$'' or ``worst of $n$'' or ``first to finish/fail.'' Key idea: max $\le t \iff$ \textbf{all} $\le t$; min $> t \iff$ \textbf{all} $> t$. \\
+$P(\max(X,Y) < u) = P(X\!<\!u \cap Y\!<\!u)$;\; $P(\min(X,Y) < u) = P(X\!<\!u \cup Y\!<\!u)$
+
+\section{Covariance \& Correlation}
+$\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$ \quad $\text{Cov}(X,X) = \text{Var}(X)$ \\
+$\text{Cov}(X,\, Y_1\!+\!Y_2) = \text{Cov}(X,Y_1) + \text{Cov}(X,Y_2)$ \\
+$\text{Cov}(aX,\, bY) = ab\,\text{Cov}(X,Y)$ \;\; $\text{Cov}(X,\, aX\!+\!b) = a\,\text{Var}(X)$ \\
+$\text{Cov}(X\!+\!Y,\, W\!+\!Z) = \text{Cov}(X,W) + \text{Cov}(X,Z) + \text{Cov}(Y,W) + \text{Cov}(Y,Z)$
+
+\textbf{Correlation coefficient:} $\rho_{XY} = \text{Cov}(X,Y)/(\sigma_X \sigma_Y)$, $-1 \le \rho \le 1$ \\
+$\text{corr}(X,\, aX+b) = \text{sign}(a)$ \\
+Outcomes on $Y\!=\!aX\!+\!b$: $a>0 \Rightarrow \rho=1$;\; $a<0 \Rightarrow \rho=-1$ \\
+$X \perp Y \Rightarrow$ uncorrelated (\textbf{converse false} in general). \\
+\textbf{Jointly Gaussian:} uncorrelated $\iff$ independent. \\
+If $\rho=0$: joint PDF factors as $f_X \cdot f_Y$ $\Rightarrow$ independent.
+
+\subsection{Variance of Sums}
+$\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\,\text{Cov}(X,Y)$ \\
+$\text{Var}(a + bX + cY) = b^2\text{Var}(X) + c^2\text{Var}(Y) + 2bc\,\text{Cov}(X,Y)$ \\
+If $X \perp Y$ or uncorrelated: $\text{Var}(X \pm Y) = \text{Var}(X) + \text{Var}(Y)$ \\
+$n$ indep.: $\text{Var}(\sum_{i=1}^n X_i) = \sum_{i=1}^n \text{Var}(X_i)$ \\
+$n$ i.i.d.: $\text{Var}(\sum X_i) = n\,\text{Var}(X)$;\; $\text{Var}(\bar{X}) = \text{Var}(X)/n$
+
+\section{Inequalities \& Limit Theorems}
+
+\subsection{Markov Inequality}
+$X \ge 0$: \; $\boxed{P(X \ge \alpha) \le \dfrac{E[X]}{\alpha}}$ \\
+\textit{Use when:} bounding $P$ for a \textbf{non-negative} r.v., only $E[X]$ known. \\
+E.g.\ avg income \$50K: $P(X \ge 200\text{K}) \le 50/200 = 25\%$.
+
+\subsection{Chebyshev Inequality}
+$\boxed{P(|X - E[X]| \ge \varepsilon) \le \dfrac{\text{Var}(X)}{\varepsilon^2}}$ \\
+\textit{Use when:} bounding how far from the mean; need $E[X]$ and $\text{Var}(X)$. Tighter than Markov. Works for \textbf{any} distribution.
+
+\subsection{Weak Law of Large Numbers}
+$\bar{Y}_n = \frac{1}{n}\sum X_i$;\; $E[\bar{Y}_n] = m$;\; $\text{Var}(\bar{Y}_n) = \sigma^2/n$ \\
+$P(|\bar{Y}_n - m| \ge \varepsilon) \le \sigma^2/(n\varepsilon^2) \to 0$ \\
+\textit{Use when:} asked about sample mean converging to true mean, or bounding error of empirical average.
+
+\subsection{Central Limit Theorem}
+$Y_n = \frac{\sum X_i - n\mu}{\sigma\sqrt{n}}$;\quad $P(Y_n \le u) \to \Phi(u)$ as $n \to \infty$ \\
+\textit{Use when:} approximating distribution of a \textbf{sum} of many i.i.d.\ r.v.s. Normalized sum $\to$ Gaussian regardless of original distribution.
+
+\section{Comparing Two R.V.s}
+$P(X < Y) + P(Y < X) + P(X = Y) = 1$ \\
+Discrete: $P(X < Y) = \sum_k P(X < k)\,P(Y\!=\!k)$ \\
+$P(X = Y) = \sum_k P(X\!=\!k)\,P(Y\!=\!k)$ \\
+\textit{Use when:} asked ``which is bigger?'' or ``$P$ they are equal.''
+
+\section{Transformations: $Z=XY$, $W=X/Y$}
+$f_{Z,W}(a,b) = \frac{1}{|b|}\, f_{X,Y}\!\left(\frac{a}{b},\, b\right)$ \\
+\textit{Use when:} given joint of $(X,Y)$, want joint of product and ratio.
+
+\section{Gaussian Integrals (All Variations)}
+$\int_{-\infty}^{\infty} e^{-at^2}\,dt = \sqrt{\frac{\pi}{a}}$ \quad ($a > 0$, base case) \\[2pt]
+$\int_{-\infty}^{\infty} t^n\, e^{-at^2}\,dt = 0$ \quad for \textbf{odd} $n$ (by symmetry) \\[2pt]
+$\int_{-\infty}^{\infty} t^2\, e^{-at^2}\,dt = \frac{1}{2a}\sqrt{\frac{\pi}{a}} = \frac{\sqrt{\pi}}{2\,a^{3/2}}$ \\[2pt]
+$\int_{-\infty}^{\infty} t^4\, e^{-at^2}\,dt = \frac{3}{4a^2}\sqrt{\frac{\pi}{a}} = \frac{3\sqrt{\pi}}{4\,a^{5/2}}$ \\[2pt]
+$\int_{0}^{\infty} t\, e^{-at^2}\,dt = \frac{1}{2a}$ \quad (half-line, odd integrand contributes) \\[2pt]
+$\int_{0}^{\infty} t^3\, e^{-at^2}\,dt = \frac{1}{2a^2}$ \\[2pt]
+General even: $\int_{-\infty}^{\infty} t^{2k} e^{-at^2}\,dt = \frac{(2k)!}{k!\,(2a)^k}\cdot\frac{1}{2}\sqrt{\frac{\pi}{a}}$ \\[2pt]
+\textit{Use when:} computing $E[X^n]$ for Gaussian, or normalizing constants. \\
+\textbf{Key rule:} odd powers over symmetric limits $(-\infty,\infty)$ always vanish. \\
+To evaluate: match your integral to $\int t^n e^{-at^2}dt$ by identifying $a$.
+
+\section{Miscellaneous Formulas}
+\textbf{Derangement:} $D_n = n!\sum_{k=0}^{n} \frac{(-1)^k}{k!}$;\; $D_n = nD_{n-1} + (-1)^n$ \\
+Values: $D_1\!=\!0$, $D_2\!=\!1$, $D_3\!=\!2$, $D_4\!=\!9$, $D_5\!=\!44$, $D_6\!=\!265$ \\
+\textit{Use when:} no item in its original position (e.g.\ hat problem). \\
+\textbf{Time reversal:} $P(\text{unseen is target}) = K/N$ regardless of what you've seen. \\
+\textit{Use when:} drawing cards---prob.\ of next card doesn't depend on order. \\
+\textbf{Expected abs.\ diff:} $E[|X\!-\!Y|] = 2\int_0^{\infty} F(t)(1\!-\!F(t))\,dt$ (i.i.d.) \\
+\textit{Use when:} expected distance/gap/difference between two i.i.d.\ things. \\
+\textbf{Median:} $F(A) = 0.5$;\;\; \textbf{Quadratic:} $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$ \\
+\textbf{Log:} $\ln(ab)=\ln a + \ln b$;\; $\ln(a/b) = \ln a - \ln b$;\; $\ln(a^b) = b\ln a$ \\
+\textbf{Areas:} $\triangle$: $\frac{1}{2}bh$;\; $\bigcirc$: $\pi r^2$;\; semicircle: $\frac{\pi r^2}{2}$;\; rectangle: $lw$ \\
+$e^{a+b}=e^a e^b$;\; $e^{\ln x}=x$;\; $\lim_{t\to\infty} e^{-t}=0$;\; $\lim_{t\to\infty} te^{-t}=0$;\; $e^{-\infty}\!=\!0$;\; $e^{\infty}\!=\!\infty$ \\
+$n! = n \cdot (n\!-\!1) \cdots 2 \cdot 1$;\; $0! = 1$;\; $\binom{n}{0} = \binom{n}{n} = 1$ \\
+\textbf{Complement trick:} $P(\text{at least 1}) = 1 - P(\text{none})$. \\
+\textit{Use when:} ``at least one'' is hard; $P(\text{none})$ is often easier. \\
+\textbf{MMSE linear est.:} $\hat{X} = aY + b$ minimizes $E[(X-\hat{X})^2]$: \\
+$a = \rho_{XY}\,\frac{\sigma_X}{\sigma_Y}$, \; $b = E[X] - a\,E[Y]$ \;\;$\Rightarrow$\;\;
+$\hat{X} = E[X] + \rho\frac{\sigma_X}{\sigma_Y}(Y - E[Y])$ \\
+\textit{Use when:} observe $Y$, want to estimate $X$ linearly. \\
+\textbf{i.i.d.:} independent \textbf{and} identically distributed (same PDF/PMF). \\
+\textbf{Poisson approx.:} $n$ large, $p$ small, $\lambda = np$: Bin$(n,p) \approx$ Pois$(\lambda)$. \\
+\textbf{Ellipse:} $\frac{(x-h)^2}{a^2} + \frac{(y-k)^2}{b^2} = 1$;\; center $(h,k)$, semi-axes $a,b$;\; $a>b$: wider;\; $b>a$: taller \\
+\textbf{Centroids:} quarter-circle: $\bar{x}=\bar{y}=4R/(3\pi)$;\; semicircle: $4R/(3\pi)$ on symmetry axis \\
+\textbf{Exponent rule:} $a^n \cdot b^n = (ab)^n$ \qquad $|A| > B \iff (A > B) \cup (A < -B)$
+
+\subsection{Common Integrals}
+$\int e^{au}\,du = \frac{e^{au}}{a}$ \qquad
+$\int u e^{au}\,du = \frac{e^{au}}{a}\!\left(u - \frac{1}{a}\right)$ \\[1pt]
+$\int_0^{\infty} u^n e^{-au}\,du = \frac{n!}{a^{n+1}}$ \;\;
+$\int \frac{du}{u} = \ln|u|$ \;\;
+$\int_0^1 u^n\,du = \frac{1}{n+1}$ \\[1pt]
+$\int \sin(au)\,du = -\frac{\cos(au)}{a}$ \;\; $\int \cos(au)\,du = \frac{\sin(au)}{a}$ \\[1pt]
+By parts: $\int u\,dv = uv - \int v\,du$ \;\;
+$\int \ln(x)\,dx = x\ln(x) - x$ \\[1pt]
+$\int_a^b c\,du = c(b-a)$;\;\; $\int_a^b u\,du = \frac{b^2-a^2}{2}$;\;\; $\int_a^b u^2\,du = \frac{b^3-a^3}{3}$
+
+\subsection{When to Use What -- Quick Guide}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}p{0.48\columnwidth} p{0.45\columnwidth}@{}}
+\textbf{If you see\ldots} & \textbf{Use\ldots} \\
+\hline
+``given that $A$ happened'' & Conditional $P$ \\
+sequence of dependent steps & Chain rule \\
+want $P(B)$ across scenarios & Total probability \\
+know result, want cause & Bayes' formula \\
+find PDF of $Y = g(X)$ & CDF method or CoV \\
+sum/diff of two r.v.s & Convolution \\
+best/worst of $n$ r.v.s & Max/Min CDF \\
+non-neg.\ r.v., bound $P$ & Markov \\
+bound deviation from mean & Chebyshev \\
+avg of many samples $\to$ mean & WLLN \\
+approx.\ dist.\ of large sum & CLT $\to \Phi$ \\
+count something complex & Indicator variables \\
+uniform region, find $P$ & Area ratio \\
+$E[X]$ hard directly & Total expect.: $E[E[X|Y]]$ \\
+observe $Y$, estimate $X$ & MMSE linear estimator \\
+``at least one'' probability & Complement: $1 - P(\text{none})$ \\
+given $Y$, find dist.\ of $X$ & Conditional PDF/PMF \\
+\end{tabular}
+
+\subsection{Region Formulas for Joint PDFs}
+Full disk: $x^2+y^2 \le r^2$, area $= \pi r^2$ \\
+Upper semicircle: $y = \sqrt{r^2 - x^2}$, area $= \pi r^2/2$ \\
+Right triangle w/ legs $a,b$: area $= ab/2$ \\
+Square $[0,a]\times[0,a]$: area $= a^2$
+
+\subsection{Common Pitfalls \& Useful Tricks}
+$E[X^2] \ne (E[X])^2$ unless $\text{Var}(X)=0$. \\
+$E[1/X] \ne 1/E[X]$ in general. \\
+$E[XY] = E[X]E[Y]$ only if uncorrelated (not always!). \\
+Uncorrelated $\not\Rightarrow$ independent (except jointly Gaussian). \\
+Disjoint $\ne$ independent. \\
+PDF$\,>1$ is fine; it's not a probability (area is). \\
+To find normalizing constant $c$: set $\int f(x)\,dx = 1$, solve for $c$. \\
+Non-rectangular support region for joint PDF $\Rightarrow$ \textbf{not} independent. \\
+Complete the square: $-ax^2 + bx = -a(x - b/2a)^2 + b^2/4a$ \\
+$\to$ use for Gaussian-like integrals that aren't in standard form. \\
+$P(A \cup B) \le P(A) + P(B)$ (union bound---useful for ``at most''). \\
+$e^x \approx 1 + x$ for small $|x|$;\; $(1+x/n)^n \to e^x$ as $n \to \infty$. \\
+\textbf{Permutations:} $P(n,k) = n!/(n-k)!$ (order matters). \\
+\textbf{Combinations:} $\binom{n}{k} = n!/(k!(n-k)!)$ (order doesn't matter). \\
+Sampling w/ replacement: $n^k$ outcomes. \\
+Sampling w/o replacement: $P(n,k)$ ordered, $\binom{n}{k}$ unordered. \\
+$X \perp Y \Rightarrow E[g(X)h(Y)] = E[g(X)]\,E[h(Y)]$ for any $g,h$. \\
+\textbf{Mixed r.v.:} CDF has both jumps (discrete) and smooth parts (continuous). $P$ of continuous part $+$ $P$ of discrete spikes $= 1$.
+
+\end{multicols*}
+\end{document}
